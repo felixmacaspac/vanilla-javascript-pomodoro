@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro</title>
+    <!-- favicon -->
+    <link
+      rel="shortcut icon"
+      type="image/jpg"
+      href="./assets/img/favicon.ico"
+    />
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Fontawesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="l-header" id="header">
+      <nav class="nav">
+        <div class="nav-logo">
+          <img src="/assets/img/goal-icon.png" alt="" class="nav-img" />
+          <span class="nav-title">Pomodoro</span>
+        </div>
+        <hr />
+      </nav>
+    </header>
+    <!-- Main -->
+    <main class="l-main">
+      <section class="main-section">
+        <div class="main-container">
+          <div class="button-group" id="js-mode-buttons">
+            <button data-mode="pomodoro" class="button btn-pomodoro active">
+              Pomodoro
+            </button>
+            <button data-mode="shortBreak" class="button btn-short">
+              Short Break
+            </button>
+            <button data-mode="longBreak" class="button btn-long">
+              Long Break
+            </button>
+            <div class="clock" id="js-clock">
+              <span id="js-minutes">25</span>
+              <span class="separator">:</span>
+              <span id="js-seconds">00</span>
+            </div>
+            <button class="start-button" data-action="start" id="js-btn">
+              <i class="fas fa-play"></i>
+            </button>
+            <audio
+              id="pomodoro-sound"
+              src="./assets/audio/button-sound.mp3"
+            ></audio>
+            <audio
+              id="ending-sound"
+              src="./assets/audio/ending-sound.mp3"
+            ></audio>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <p class="footer-about">
+          <i class="far fa-copyright footer-copyright"></i>2021 Pandesal. All
+          right reserved
+        </p>
+      </div>
+      <div class="footer-social">
+        <a
+          href="https://github.com/Pandesal"
+          target="_blank"
+          class="footer-item"
+          ><i class="fab fa-github fa-lg"></i
+        ></a>
+        <a
+          href="https://discordapp.com/users/650354818401173515/"
+          target="_blank"
+          class="footer-item"
+          ><i class="fab fa-discord fa-lg"></i
+        ></a>
+      </div>
+    </footer>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
