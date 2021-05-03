@@ -1,31 +1,30 @@
 const timer = {
-  pomodoro: 25,
+  pomodoro: 30,
   shortBreak: 5,
-  longBreak: 15,
+  longBreak: 10,
   longBreakInterval: 4,
   session: 0,
 };
 
-const pomodoroSound = document.getElementById('pomodoro-sound')
-const endingSound = document.getElementById('ending-sound')
+const pomodoroSound = document.getElementById("pomodoro-sound");
+const endingSound = document.getElementById("ending-sound");
 
 let interval;
 
-
-const mainButton = document.getElementById('js-btn');
-mainButton.addEventListener('click', () => {
+const mainButton = document.getElementById("js-btn");
+mainButton.addEventListener("click", () => {
   const { action } = mainButton.dataset;
-  if (action === 'start') {
+  if (action === "start") {
     startTimer();
-    pomodoroSound.play()
+    pomodoroSound.play();
   } else {
     stopTimer();
-    pomodoroSound.play()
+    pomodoroSound.play();
   }
 });
 
-const modeButtons = document.querySelector('#js-mode-buttons');
-modeButtons.addEventListener('click', handleMode);
+const modeButtons = document.querySelector("#js-mode-buttons");
+modeButtons.addEventListener("click", handleMode);
 
 function getRemainingTime(endTime) {
   const currentTime = Date.parse(new Date());
@@ -45,44 +44,43 @@ function getRemainingTime(endTime) {
 function startTimer() {
   let { total } = timer.remainingTime;
   const endTime = Date.parse(new Date()) + total * 1000;
-  
-  
-  mainButton.dataset.action = 'stop';
-  mainButton.innerHTML = `<i class="fas fa-pause"></i>`;
-  mainButton.classList.add('stop-button-active');
 
-  if (timer.mode === 'pomodoro') timer.sessions++;
+  mainButton.dataset.action = "stop";
+  mainButton.innerHTML = `<i class="fas fa-pause"></i>`;
+  mainButton.classList.add("stop-button-active");
+
+  if (timer.mode === "pomodoro") timer.sessions++;
 
   // adding the notication for every session
-  if (Notification.permission === 'granted') {
+  if (Notification.permission === "granted") {
     const text =
-      timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
+      timer.mode === "pomodoro" ? "Get back to work!" : "Take a break!";
     new Notification(text);
   }
 
-  interval = setInterval(function() {
+  interval = setInterval(function () {
     timer.remainingTime = getRemainingTime(endTime);
     updateClock();
     total = timer.remainingTime.total;
     if (total <= 0) {
       clearInterval(interval);
 
-      // automatically starts the next session 
+      // automatically starts the next session
       switch (timer.mode) {
-        case 'pomodoro':
+        case "pomodoro":
           if (timer.sessions % timer.longBreakInterval === 0) {
-            switchMode('longBreak');
-            pomodoroSound.play()
-            endingSound.play()
+            switchMode("longBreak");
+            pomodoroSound.play();
+            endingSound.play();
           } else {
-            switchMode('shortBreak');
-            pomodoroSound.play()
-            endingSound.play()
+            switchMode("shortBreak");
+            pomodoroSound.play();
+            endingSound.play();
           }
           break;
         default:
-          switchMode('pomodoro');
-          pomodoroSound.play()
+          switchMode("pomodoro");
+          pomodoroSound.play();
       }
       startTimer();
     }
@@ -93,22 +91,23 @@ function startTimer() {
 function stopTimer() {
   clearInterval(interval);
 
-  mainButton.dataset.action = 'start';
+  mainButton.dataset.action = "start";
   mainButton.innerHTML = `<span><i class="fas fa-play"></i> </span>`;
-  mainButton.classList.remove('stop-button-active')
+  mainButton.classList.remove("stop-button-active");
 }
 // Updating the Timer
 function updateClock() {
   const { remainingTime } = timer;
-  const minutes = `${remainingTime.minutes}`.padStart(2, '0');
-  const seconds = `${remainingTime.seconds}`.padStart(2, '0');
+  const minutes = `${remainingTime.minutes}`.padStart(2, "0");
+  const seconds = `${remainingTime.seconds}`.padStart(2, "0");
 
-  const min = document.getElementById('js-minutes');
-  const sec = document.getElementById('js-seconds');
+  const min = document.getElementById("js-minutes");
+  const sec = document.getElementById("js-seconds");
   min.textContent = minutes;
   sec.textContent = seconds;
   // Connecting the time to title
-  const text = timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
+  const text =
+    timer.mode === "pomodoro" ? "Get back to work!" : "Take a break!";
   document.title = `${minutes}:${seconds} - ${text}`;
 }
 // Updating the timer
@@ -121,11 +120,11 @@ function switchMode(mode) {
   };
 
   // Changing Background
-  const buttonDataMode = document.querySelectorAll('button[data-mode]')
-  buttonDataMode.forEach(e => {
-    e.classList.remove('active')
+  const buttonDataMode = document.querySelectorAll("button[data-mode]");
+  buttonDataMode.forEach((e) => {
+    e.classList.remove("active");
   });
-  document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+  document.querySelector(`[data-mode="${mode}"]`).classList.add("active");
   document.body.style.backgroundColor = `var(--${mode})`;
 
   updateClock();
@@ -141,24 +140,21 @@ function handleMode(event) {
 }
 
 // notification permission
-document.addEventListener('DOMContentLoaded', () => {
-  if ('Notification' in window) {
+document.addEventListener("DOMContentLoaded", () => {
+  if ("Notification" in window) {
     if (
-      Notification.permission !== 'granted' &&
-      Notification.permission !== 'denied'
+      Notification.permission !== "granted" &&
+      Notification.permission !== "denied"
     ) {
-      Notification.requestPermission().then(function(permission) {
-        if (permission === 'granted') {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
           new Notification(
-            'Awesome! You will be notified at the start of each session'
+            "Awesome! You will be notified at the start of each session"
           );
         }
       });
     }
   }
-  
 
-  switchMode('pomodoro');
+  switchMode("pomodoro");
 });
-
-
