@@ -135,7 +135,7 @@ body {
   font-weight: var(--font-semi-bold);
   margin: var(--mb-6);
   color: var(--text-color);
-  text-shadow: 3px 3px #3f3f3f;
+  text-shadow: 3px 3px var(--first-color-dark);
 }
 
 .start-button,
